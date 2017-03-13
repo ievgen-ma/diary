@@ -1,0 +1,48 @@
+<div class="nav_wrapper">
+  <h1>Main</h1>
+  <ul>
+    <li class="nav_item">
+      <a href="javascript:void(0);">Overview</a>
+    </li>
+  </ul>
+</div>
+<div class="main">
+  <div class="main_columns" >
+    <h2>Items</h2>
+    <form class="main_form" ng-submit="vm.addItem(vm.name)">
+      <input type="text" placeholder="Type name here..." ng-model="vm.name" class="insert" />
+      <input type="submit" class="btn" value="Add new" ng-disabled="!vm.name" />
+      <div class="items-container">
+        <div ng-repeat="item in vm.items track by $index" class="item-wrap" ng-class="{ active:vm.tab === $index }" ng-click="vm.setTab($index)">
+          <div class="item_border" ng-class="{ active:vm.tab === $index }">
+          </div>
+          <p class="item_name">{{item.name}}</p>
+          <span class="item_number" ng-if="item.comments.length > 0">{{item.comments.length}}</span>
+          <a ng-click="vm.removeItem(item.name)" class="btn-1">
+            Delete
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="main_columns">
+    <div
+      class="chat"
+      ng-repeat="item in vm.items track by $index"
+      ng-show="vm.showTab($index)">
+      <h2>Comments #{{$index + 1}}</h2>
+      <form>
+        <div class="comment-border" ng-repeat="comment in item.comments track by $index">
+          <div class="comment-block">
+            <div class="avatar" ng-style="{'background-color':'{{avatar}}'}"></div>
+            <p class="comment-text">{{comment}}</p>
+          </div>
+        </div>
+        <div class="comment-input">
+          <div class="avatar"></div>
+          <textarea ng-model="vm.comment" ng-enter="vm.addComment(item.name, vm.comment)"></textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
